@@ -1,0 +1,26 @@
+{
+  "name": "somecodebyreactjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MING18Y/someCodeByReactjs.git"
+  },
+  "author": "This",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MING18Y/someCodeByReactjs/issues"
+  },
+  "homepage": "https://github.com/MING18Y/someCodeByReactjs#readme",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "less": "^3.9.0"
+  }
+}
