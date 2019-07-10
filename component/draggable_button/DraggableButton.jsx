@@ -6,7 +6,7 @@ export default class DraggableButton extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-
+      placeHolderText: '请按住滑块，拖动到最右边',
     }
 
     /**
@@ -20,6 +20,8 @@ export default class DraggableButton extends React.Component {
      * screenY：触摸目标在屏幕中的y坐标。
      * target：触目的DOM节点目标。
     */
+
+    this.isFrozenBlock = false
     
     this.handleTouchStart = (e) => {
       let element = e.target
@@ -39,10 +41,46 @@ export default class DraggableButton extends React.Component {
     }
 
     this.handleTouchMove = (e) => {
+      if (this.isFrozenBlock) {
+        return
+      }
       let element = e.target
-      let boundingClientRect = element.getBoundingClientRect()
-      let elementLeft = boundingClientRect.left
-      let elementRight = boundingClientRect.right
+      let buttonBlockBoundingClientRect = element.getBoundingClientRect()
+      
+      this.handleButtonBlockMove(e, element, buttonBlockBoundingClientRect)
+      this.handleTailIncrease(e, element, buttonBlockBoundingClientRect)
+    }
+
+    this.handleButtonBlockPosition = (e, element) => {
+      element.style.left = this.buttonInitX + (e.touches[0].clientX - this.fingerInitX) - (this.fingerInitX - this.buttonInitX) + 'px'
+    }
+
+    this.handleTouchEnd = (e) => {
+      let element = e.target
+      let targetBoundingClientRect = element.getBoundingClientRect()
+      let guideBoundingClientRect = document.getElementsByClassName('draggable_button_guide')[0].getBoundingClientRect()
+
+      let elementLeft = targetBoundingClientRect.left
+      let elementRight = targetBoundingClientRect.right
+
+      // 重置滑块位置
+      if (elementRight !== guideBoundingClientRect.right) {
+        this.resetBlockPostion(element)
+        this.resetTailWidth()
+      }  
+      
+      if (elementRight === guideBoundingClientRect.right) {
+        this.handleRightSideReached()
+      }
+
+    }
+
+    // 移动滑块
+    this.handleButtonBlockMove = (e, element, buttonBlockBoundingClientRect) => {
+      // let element = e.target
+      // let buttonBlockBoundingClientRect = element.getBoundingClientRect()
+      let elementLeft = buttonBlockBoundingClientRect.left
+      let elementRight = buttonBlockBoundingClientRect.right
 
       if (elementLeft > this.guideElementInitLeft && elementRight < this.guideElementInitRight) {
         this.handleButtonBlockPosition(e, element)
@@ -64,28 +102,6 @@ export default class DraggableButton extends React.Component {
 
       this.lastTouchClientX = e.touches[0].clientX
     }
-
-    this.handleButtonBlockPosition = (e, element) => {
-      element.style.left = this.buttonInitX + (e.touches[0].clientX - this.fingerInitX) - (this.fingerInitX - this.buttonInitX) + 'px'
-    }
-
-    this.handleTouchEnd = (e) => {
-      let element = e.target
-      let targetBoundingClientRect = element.getBoundingClientRect()
-      let guideBoundingClientRect = document.getElementsByClassName('draggable_button_guide')[0].getBoundingClientRect()
-
-      let elementLeft = targetBoundingClientRect.left
-      let elementRight = targetBoundingClientRect.right
-
-      // 重置滑块位置
-      if (elementRight !== guideBoundingClientRect.right) {
-        this.resetBlockPostion(element)
-      }  
-      
-      if (elementRight === guideBoundingClientRect.right) {
-        this.props.onRightSideReached()
-      }
-    } 
     
     // 滑块复位
     this.resetBlockPostion = (element) => {
@@ -97,7 +113,7 @@ export default class DraggableButton extends React.Component {
       }, 100)
     }
 
-    // 防止“出轨”
+    // 防止出轨
     this.avoidOutBouding = (element) => {
       let targetBoundingClientRect = element.getBoundingClientRect()
 
@@ -115,6 +131,31 @@ export default class DraggableButton extends React.Component {
         element.style.right = 0 + 'px'
         return
       }
+    }
+
+    // 滑块尾迹跟随滑块增长
+    this.handleTailIncrease = (e, element, buttonBlockBoundingClientRect) => {
+      this.draggableButtonTail.style.width = buttonBlockBoundingClientRect.x - this.buttonInitX + 5 + 'px'
+    }
+
+    // 滑块尾迹复位
+    this.resetTailWidth = () => {
+      this.draggableButtonTail.classList.add('draggable_button_tail_transiton')
+      this.draggableButtonTail.style.width = 5 + 'px'
+
+      setTimeout(()=>{
+        this.draggableButtonTail.classList.remove('draggable_button_tail_transiton')
+      }, 100)
+    }
+
+    // 滑块触底 
+    this.handleRightSideReached = () => {
+      this.isFrozenBlock = true
+      this.setState({
+        placeHolderText: '成功'
+      })
+      
+      this.props.onRightSideReached()
     }
 
     //处理自定义样式
@@ -150,12 +191,21 @@ export default class DraggableButton extends React.Component {
     return (
       <div className='draggable_button_container'>
         <div className='draggable_button_guide' style={this.handleCustomizeGuideStyle()}>
+          <div className='draggable_button_tail' ref={r => this.draggableButtonTail = r} />
           <div className='draggable_button' 
             style={this.handleCustomizeButtonStyle()}
             onTouchStart={(e) => { this.handleTouchStart(e) }} 
             onTouchMove={(e) => { this.handleTouchMove(e) }} 
-            onTouchEnd={(e) => { this.handleTouchEnd(e)}} 
+            onTouchEnd={(e) => { this.handleTouchEnd(e) }} 
             />
+          {/* <div className='draggable_button_shadow_guide' /> */}
+          <div className='draggable_button_place_holder' >
+            {
+              this.props.draggableButtonPlaceHolder
+              ? this.props.draggableButtonPlaceHolder
+              : this.state.placeHolderText
+            }
+          </div>
         </div>
       </div>
     )

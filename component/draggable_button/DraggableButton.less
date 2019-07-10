@@ -7,16 +7,52 @@
     height: 100%;
     position: relative;
 
+    .draggable_button_tail {
+      position: absolute;
+      left: 0px;
+      height: 100%;
+      width: 5px;
+      background-color: #9d9dff;
+      will-change: width;
+    }
+
     .draggable_button {
       width: 50px;
       height: 100%;
       background-color: blue;
       position: absolute;
       left: 0px;
+      will-change: left;
+      z-index: 1;
+
+    }
+
+    // .draggable_button_shadow_guide {
+    //   background-image: radial-gradient(circle, lightblue, transparent);      
+    //   width: 100%;
+    //   height: 100%;
+    //   position: absolute;
+    //   top: 0;
+    //   left: 0;
+    // }
+
+    .draggable_button_place_holder {
+      position: absolute;
+      font-size: 14px;
+      color: #999;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .draggable_button_transiton {
       transition: left 0.1s linear;
+    }
+
+    .draggable_button_tail_transiton {
+      transition: width 0.1s linear;
     }
   }
 }
