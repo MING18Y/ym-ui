@@ -216,7 +216,8 @@ export default class DraggableButton extends React.Component {
           <div
             className='draggable_button_tail'
             ref={(r) => this.draggableButtonTail = r} />
-          <div className='draggable_button'
+          <div
+            className='draggable_button'
             style={this.handleCustomizeButtonStyle()}
             onTouchStart={(e) => {
               this.handleTouchStart(e);
