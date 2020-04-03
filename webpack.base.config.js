@@ -6,14 +6,15 @@ module.exports = {
     output: path.resolve(__dirname, 'dist'),
     module: {
         rules: [
+            
             {
-                test: /\.(png|svg|jpg|gif)$/,
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: [
                     'file-loader'
                 ]
             },
             {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                test: /\.(png|svg|jpg|gif)$/,
                 use: [
                     'file-loader'
                 ]
