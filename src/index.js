@@ -1,7 +1,9 @@
-import DraggableButton from './component/draggable_button/DraggableButton.jsx';
-import Ripple from './component/ripple/ripple.jsx';
+import React from 'react';
+import ReactDom from 'react-dom';
+import App from './App';
 
-export default ymcomponent = {
-  DraggableButton,
-  Ripple,
-};
+const rootContainer = document.querySelector('#root');
+ReactDom.render(
+    <App />,
+    rootContainer
+);

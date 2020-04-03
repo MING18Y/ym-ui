@@ -2,9 +2,11 @@ module.exports = {
   'env': {
     'browser': true,
     'es6': true,
+    'node': true,
   },
   'extends': [
-    'google',
+    "eslint:recommended",
+    "plugin:react/recommended"
   ],
   'globals': {
     'Atomics': 'readonly',
@@ -21,5 +23,5 @@ module.exports = {
     'react',
   ],
   'rules': {
-  },
+  }
 };
