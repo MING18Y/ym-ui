@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MING18Y/someCodeByReactjs.git"
   },
-  "author": "This",
+  "author": "MING18Y",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MING18Y/someCodeByReactjs/issues"
@@ -21,6 +22,12 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
-    "less": "^3.9.0"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "file-loader": "^6.0.0",
+    "less": "^3.9.0",
+    "less-loader": "^5.0.0"
   }
 }
