@@ -1,12 +1,19 @@
 const path = require('path');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+    mode: 'development',
     entry: './src/index.js',
-    output: path.resolve(__dirname, 'dist'),
+    plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            title: 'YMUI-EXAMPLE-PAGE',
+            lang: 'zh-cmn-Hans',
+        })
+    ],
     module: {
         rules: [
-            
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: [
@@ -25,10 +32,8 @@ module.exports = {
                     loader: "style-loader"
                 }, {
                     loader: "css-loader",
-                    sourceMap: true,
                 }, {
                     loader: "less-loader",
-                    sourceMap: true
                 }]
             },
             {
@@ -52,5 +57,11 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    output: {
+        filename: "[name].[hash].bundle.js",
+        path: path.resolve(__dirname, 'dist'),
+    },
+
+
 }
