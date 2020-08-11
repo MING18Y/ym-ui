@@ -1,49 +1,53 @@
-const path = require("path");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: {
-      index: "./src/app.jsx"
-  },
+  entry: './src/app.jsx',
   output: {
-      filename: '[name].js',
-      path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[chunkhash].js',
   },
   optimization: {
     splitChunks: {
-      chunks: "all",
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
     },
   },
-  plugins: [ 
+  plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: "YMUI-EXAMPLE-PAGE",
-      lang: "zh-cmn-Hans",
-      template: 'src/index.html'
+      title: 'YMUI-EXAMPLE-PAGE',
+      lang: 'zh-cmn-Hans',
+      template: 'src/index.html',
     }),
   ],
   module: {
     rules: [
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: ["file-loader"],
+        use: ['file-loader'],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: ["file-loader"],
+        use: ['file-loader'],
       },
       {
         test: /\.less$/,
         use: [
           {
-            loader: "style-loader",
+            loader: 'style-loader',
           },
           {
-            loader: "css-loader",
+            loader: 'css-loader',
           },
           {
-            loader: "less-loader",
+            loader: 'less-loader',
           },
         ],
       },
@@ -51,9 +55,9 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env"],
+            presets: ['@babel/preset-env'],
           },
         },
       },
@@ -61,16 +65,12 @@ module.exports = {
         test: /\.jsx$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-react"],
+            presets: ['@babel/preset-react'],
           },
         },
       },
     ],
-  },
-  output: {
-    filename: "[name].[hash].bundle.js",
-    path: path.resolve(__dirname, "dist"),
   },
 };
