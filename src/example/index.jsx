@@ -1,14 +1,26 @@
-/* eslint-disable require-jsdoc */
 import React from 'react';
-import Page from '../components/page';
+import ReactDOM from 'react-dom';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
+import DraggableButton
+  from '../components/draggable_button/DraggableButton.jsx';
 
-export default class ExampleHome extends React.Component {
-  render() {
-    return (
-      <Page>
-        123123
-      </Page>
-    );
-  }
+function App(props) {
+  console.log('loaded app');
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path="/">
+          <div className="root">
+            <DraggableButton/>
+          </div>
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
 }
+
+ReactDOM.render(
+  <App/>,
+  document.getElementById('app'),
+);

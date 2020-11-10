@@ -1,5 +1,5 @@
-import DraggableButton from "./components/draggable_button/DraggableButton.jsx";
-import Ripple from "./components/ripple/ripple.jsx";
+import DraggableButton from './components/draggable_button/DraggableButton.jsx';
+import Ripple from './components/ripple/ripple.jsx';
 
 const YMUI = {
   DraggableButton,
@@ -7,5 +7,5 @@ const YMUI = {
 };
 export default YMUI;
 
-export { DraggableButton, Ripple };
+export {DraggableButton, Ripple};
 
