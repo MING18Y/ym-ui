@@ -1,6 +1,4 @@
 const path = require('path');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/app.jsx',
@@ -19,14 +17,6 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      title: 'YMUI-EXAMPLE-PAGE',
-      lang: 'zh-cmn-Hans',
-      template: 'src/index.html',
-    }),
-  ],
   module: {
     rules: [
       {
@@ -70,6 +60,10 @@ module.exports = {
             presets: ['@babel/preset-react'],
           },
         },
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'awesome-typescript-loader',
       },
     ],
   },

@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 import React from 'react';
-import Page from '../components/page';
+import Page from '../components/page/page';
 
 
 export default class ExampleHome extends React.Component {
