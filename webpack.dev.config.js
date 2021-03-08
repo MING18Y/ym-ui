@@ -1,3 +1,4 @@
+const path = require('path');
 const {merge} = require('webpack-merge');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -8,7 +9,8 @@ module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './dist',
+    contentBase: path.resolve(__dirname, 'dist'),
+    // publicPath: path.resolve(__dirname, 'dist'),
     compress: true,
     hot: true,
   },

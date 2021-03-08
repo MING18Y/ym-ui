@@ -20,5 +20,6 @@ module.exports = {
   'rules': {
     'require-jsdoc': 'off',
     'linebreak-style': [0, 'error', 'windows'],
+    'indent': ['error', 2],
   },
 };
